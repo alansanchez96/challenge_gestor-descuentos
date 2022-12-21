@@ -18,9 +18,9 @@ class AccessTypeFactory extends Factory
     public function definition()
     {
         return [
-            'code' => Str::upper($this->faker->unique()->randomLetter()),
+            'code' => Str::upper($this->faker->unique()->randomElement(['a', 'b', 'c'])),
             'name' => $this->faker->unique()->randomElement(['Cliente Final', 'Corporativo', 'Agencia']),
-            'display_order' => $this->faker->unique()->biasedNumberBetween(0, 40)    
+            'display_order' => $this->faker->unique()->randomElement([1, 2, 3])
         ];
     }
 }

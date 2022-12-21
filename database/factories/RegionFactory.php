@@ -17,9 +17,9 @@ class RegionFactory extends Factory
     public function definition()
     {
         return [
-            'code' => $this->faker->unique()->ean8(),
+            'code' => $this->faker->unique()->countryCode() . '-' . $this->faker->unique()->ean8(),
             'name' => $this->faker->unique()->country(),
-            'display_order' => $this->faker->unique()->biasedNumberBetween(0, 40),
+            'display_order' => $this->faker->unique()->randomElement(['1', '2', '3', '4'])
         ];
     }
 }
