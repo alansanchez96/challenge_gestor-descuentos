@@ -3,8 +3,13 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 use App\Models\User;
+use App\Models\Brand;
+use App\Models\Region;
 use Illuminate\Database\Seeder;
+use Database\Seeders\BrandSeeder;
+use Database\Seeders\RegionSeeder;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -23,5 +28,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@example.com',
             'password' => Hash::make('password')
         ]);
+
+        $this->call(BrandSeeder::class);
+        $this->call(RegionSeeder::class);
     }
 }
