@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('brands', function (Blueprint $table) {
-            $table->id();
-            $table->string('name', 100);
-            $table->integer('display_order', false, true);
-            $table->enum('active', [0, 1])->default(0);
+        Schema::create('access_types', function (Blueprint $table) {
+            $table->string('code', 1)->index();
+            $table->text('name');
+            $table->unsignedBigInteger('display_order');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('brands');
+        Schema::dropIfExists('access_types');
     }
 };

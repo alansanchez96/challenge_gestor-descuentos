@@ -11,6 +11,7 @@ use Illuminate\Database\Seeder;
 use Database\Seeders\BrandSeeder;
 use Database\Seeders\RegionSeeder;
 use Illuminate\Support\Facades\Hash;
+use Database\Seeders\AccessTypeSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -31,5 +32,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(BrandSeeder::class);
         $this->call(RegionSeeder::class);
+        $this->call(AccessTypeSeeder::class);
     }
 }

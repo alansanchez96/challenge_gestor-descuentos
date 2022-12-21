@@ -17,9 +17,9 @@ class BrandFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->firstName(),
-            'display_order' => $this->faker->biasedNumberBetween(0, 40),
-            'activo' => $this->faker->randomElement(['0', '1'])
+            'name' => $this->faker->unique()->firstName(),
+            'display_order' => $this->faker->unique()->biasedNumberBetween(0, 40),
+            'active' => $this->faker->randomElement(['0', '1'])
         ];
     }
 }
