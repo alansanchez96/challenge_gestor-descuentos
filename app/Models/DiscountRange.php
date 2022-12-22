@@ -6,14 +6,14 @@ use App\Models\Discount;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class AccessType extends Model
+class DiscountRange extends Model
 {
     use HasFactory;
 
-    protected $table = 'access_types';
+    protected $table = 'discount_ranges';
 
     public function discount()
     {
-        return $this->hasMany(Discount::class);
+        return $this->belongsTo(Discount::class);
     }
 }

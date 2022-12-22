@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('access_types', function (Blueprint $table) {
-            $table->string('code', 1)->index();
+            $table->string('code', 1)->primary();
             $table->text('name');
             $table->unsignedBigInteger('display_order');
             $table->timestamps();

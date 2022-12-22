@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('from_days');
             $table->unsignedInteger('to_days');
-            $table->double('discount');
-            $table->string('code', 15);
+            $table->double('discount')->nullable(true);
+            $table->string('code', 15)->nullable(true);
             $table->unsignedBigInteger('discount_id');
             $table->foreign('discount_id')->references('id')->on('discounts');
             $table->timestamps();

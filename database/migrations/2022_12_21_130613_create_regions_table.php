@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('code', 60);
             $table->string('name', 100);
-            $table->integer('display_order', false, true);
+            $table->unsignedInteger('display_order');
             $table->timestamps();
         });
     }

@@ -17,8 +17,8 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('brand.index')" :active="request()->routeIs('brand.index')">
-                        {{ __('Listado de Brands') }}
+                    <x-nav-link :href="route('discount.index')" :active="request()->routeIs('discount.index')">
+                        {{ __('Descuentos') }}
                     </x-nav-link>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,4 +32,6 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/brands', [BrandController::class, 'index'])->name('brand.index');
+Route::get('/discounts', [DiscountController::class, 'index'])->name('discount.index');
+Route::get('/create-discounts', [DiscountController::class, 'create'])->name('discount.create');
+Route::post('/create-discounts', [DiscountController::class, 'store'])->name('discount.store');

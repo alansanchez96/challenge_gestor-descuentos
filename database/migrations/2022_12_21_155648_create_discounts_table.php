@@ -22,7 +22,9 @@ return new class extends Migration
             $table->enum('active', ['0', '1'])->default('0');
             $table->unsignedBigInteger('region_id');
             $table->unsignedBigInteger('brand_id');
-            $table->string('access_type_code', 1)->references('code')->on('access_types');
+            $table->string('access_type_code', 1);
+
+            $table->foreign('access_type_code')->references('code')->on('access_types');
 
             $table->foreign('region_id')
                 ->references('id')
