@@ -24,15 +24,14 @@ class DiscountRequest extends FormRequest
     public function rules()
     {
         return [
-            'discounts_name' => 'required|string|min:3|max:100|unique:discounts,name',
+            'discounts_name' => "required|string|min:3|max:100|unique:discounts,name,{$this->id}",
+            'discounts_active' => 'required',
+            'discounts_priority' => 'required|numeric|integer|between:100,1000',
             'discount_brand_id' => 'required',
             'discounts_access_type_code' => 'required',
-            'discounts_priority' => 'required|numeric|integer',
             'discounts_region_id' => 'required',
-            /* 'discount_start_date_1' => 'required|numeric|integer',
-            'discount_end_date_1' => 'required|numeric|integer',
-            'discount_code_1' => 'required_if:discount_percent_1,null|max:15',
-            'discount_percent_1' => 'required_if:discount_code_1,integer' */
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
         ];
     }
 }

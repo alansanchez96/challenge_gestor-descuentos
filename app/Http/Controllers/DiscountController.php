@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\Region;
+use App\Models\Discount;
+use App\Models\AccessType;
 use Illuminate\Http\Request;
+use App\Models\DiscountRange;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DiscountRequest;
-use App\Models\AccessType;
-use App\Models\Discount;
-use App\Models\DiscountRange;
+use App\Http\Requests\DiscountRangeRequest;
 
 class DiscountController extends Controller
 {
@@ -31,54 +32,31 @@ class DiscountController extends Controller
         return view('discount.create', compact('brands', 'accessTypes', 'regions'));
     }
 
-    public function store(Request $request)
+    public function store(DiscountRequest $discountRequest, DiscountRangeRequest $discountRangeRequest)
     {
-        $discount = new Discount();
-        $discount->name = $request->discounts_name;
-        $discount->priority = $request->discounts_priority;
-        $discount->start_date = $request->start_date;
-        $discount->end_date = $request->end_date;
-        $discount->active = $request->discounts_active;
-        $discount->region_id = $request->discounts_region_id;
-        $discount->brand_id = $request->discount_brand_id;
-        $discount->access_type_code = $request->discounts_access_type_code;
-        $discount->save();
+        $discount = Discount::firstOrCreate([
+            'name' => $discountRequest->discounts_name,
+            'start_date' => $discountRequest->start_date,
+            'end_date' => $discountRequest->end_date,
+            'priority' => $discountRequest->discounts_priority,
+            'active' => $discountRequest->discounts_active,
+            'region_id' => $discountRequest->discounts_region_id,
+            'brand_id' => $discountRequest->discount_brand_id,
+            'access_type_code' => $discountRequest->discounts_access_type_code
+        ]);
 
-        $discountModel = Discount::where('name', $request->discounts_name)->get();
+        $discountModel = Discount::first('name', $discountRequest->discounts_name)->get();
 
-        $discountRanges = new DiscountRange();
-        $discountRanges->from_days = $request->from_days_1;
-        $discountRanges->to_days = $request->to_days_1;
-        $discountRanges->code = $request->discount_code_1;
-        $discountRanges->discount = $request->discount_percent_1;
-        $discountRanges->discount_id = $discountModel[0]->id;
-
-        $discountRanges->save();
-
-        if ($request->from_days_2 && $request->to_days_2 !== null) {
-            $discountRanges_2 = new DiscountRange();
-            $discountRanges_2->from_days = $request->from_days_2;
-            $discountRanges_2->to_days = $request->to_days_2;
-            $discountRanges_2->code = $request->discount_code_2;
-            $discountRanges_2->discount = $request->discount_percent_2;
-            $discountRanges_2->discount_id = $discountModel[0]->id;
-
-            $discountRanges_2->save();
+        for ($i = 1; $i <= 3; $i++) {
+            if ($discountRangeRequest->{'from_days_' . $i} && $discountRangeRequest->{'to_days_' . $i} !== null) {
+                $discount->discountsRanges()->create([
+                    'from_days' => $discountRangeRequest->{'from_days_' . $i},
+                    'to_days' => $discountRangeRequest->{'to_days_' . $i},
+                    'discount' => $discountRangeRequest->{'discount_percent_' . $i},
+                    'code' => $discountRangeRequest->{'discount_code_' . $i},
+                    'discount_id' => $discountModel[0]->id
+                ]);
+            }
         }
-
-        if ($request->from_days_3 && $request->to_days_3 !== null) {
-            $discountRanges_3 = new DiscountRange();
-            $discountRanges_3->from_days = $request->from_days_3;
-            $discountRanges_3->to_days = $request->to_days_3;
-            $discountRanges_3->code = $request->discount_code_3;
-            $discountRanges_3->discount = $request->discount_percent_3;
-            $discountRanges_3->discount_id = $discountModel[0]->id;
-
-            $discountRanges_3->save();
-        }
-
-
-
-        return $discount;
     }
 }

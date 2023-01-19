@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 Route::get('/discounts', [DiscountController::class, 'index'])->name('discount.index');
 Route::get('/create-discounts', [DiscountController::class, 'create'])->name('discount.create');

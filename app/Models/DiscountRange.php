@@ -12,6 +12,8 @@ class DiscountRange extends Model
 
     protected $table = 'discount_ranges';
 
+    protected $guarded = [];
+
     public function discount()
     {
         return $this->belongsTo(Discount::class);

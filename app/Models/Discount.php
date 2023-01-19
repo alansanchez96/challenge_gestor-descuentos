@@ -20,7 +20,7 @@ class Discount extends Model
 
     protected $dates = ['deleted_at'];
 
-
+    protected $guarded = [];
 
     public function brand()
     {
@@ -39,6 +39,6 @@ class Discount extends Model
 
     public function discountsRanges()
     {
-        return $this->hasMany(DiscountRange::class);
+        return $this->belongsTo(DiscountRange::class);
     }
 }
