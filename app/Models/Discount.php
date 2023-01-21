@@ -39,6 +39,6 @@ class Discount extends Model
 
     public function discountsRanges()
     {
-        return $this->belongsTo(DiscountRange::class);
+        return $this->hasMany(DiscountRange::class, 'discount_id', 'id');
     }
 }

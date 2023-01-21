@@ -11,14 +11,21 @@ use App\Models\DiscountRange;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DiscountRequest;
 use App\Http\Requests\DiscountRangeRequest;
+use Illuminate\Support\Facades\DB;
 
 class DiscountController extends Controller
 {
     public function index()
     {
-        $discounts = Discount::with([
-            'brand' => fn ($query) => $query->whereActive('1')
-        ])->whereHas('brand', fn ($query) => $query->whereActive('1'))->paginate(5);
+        $discounts = Discount::with(['brand', 'discountsRanges'])->orderBy('discounts.name')->paginate(5);
+
+
+        /* ::with([
+            'brand' => fn ($query) => $query->whereActive("1"),
+            'discountsRanges' => fn ($query) => $query->where('discount_id', 20),
+        ])->whereHas('brand', fn ($query) => $query->whereActive('1'))
+            ->whereHas('discountsRanges', fn ($query) => $query->where('discount_id', 20))
+            ->get(); */
 
         return view('discount.index', compact('discounts'));
     }
@@ -58,5 +65,7 @@ class DiscountController extends Controller
                 ]);
             }
         }
+
+        return redirect()->route('discount.index')->with('success', 'Descuento creado correctamente.');
     }
 }
