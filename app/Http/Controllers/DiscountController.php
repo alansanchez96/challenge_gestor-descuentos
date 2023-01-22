@@ -6,26 +6,18 @@ use App\Models\Brand;
 use App\Models\Region;
 use App\Models\Discount;
 use App\Models\AccessType;
-use Illuminate\Http\Request;
-use App\Models\DiscountRange;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DiscountRequest;
 use App\Http\Requests\DiscountRangeRequest;
-use Illuminate\Support\Facades\DB;
 
 class DiscountController extends Controller
 {
     public function index()
     {
-        $discounts = Discount::with(['brand', 'discountsRanges'])->orderBy('discounts.name')->paginate(5);
-
-
-        /* ::with([
-            'brand' => fn ($query) => $query->whereActive("1"),
-            'discountsRanges' => fn ($query) => $query->where('discount_id', 20),
-        ])->whereHas('brand', fn ($query) => $query->whereActive('1'))
-            ->whereHas('discountsRanges', fn ($query) => $query->where('discount_id', 20))
-            ->get(); */
+        $discounts = Discount::with(['brand', 'discountsRanges'])
+            ->whereHas('brand', fn ($query) => $query->whereActive('1'))
+            ->orderBy('discounts.name')
+            ->paginate(5);
 
         return view('discount.index', compact('discounts'));
     }
@@ -52,8 +44,6 @@ class DiscountController extends Controller
             'access_type_code' => $discountRequest->discounts_access_type_code
         ]);
 
-        $discountModel = Discount::first('name', $discountRequest->discounts_name)->get();
-
         for ($i = 1; $i <= 3; $i++) {
             if ($discountRangeRequest->{'from_days_' . $i} && $discountRangeRequest->{'to_days_' . $i} !== null) {
                 $discount->discountsRanges()->create([
@@ -61,7 +51,7 @@ class DiscountController extends Controller
                     'to_days' => $discountRangeRequest->{'to_days_' . $i},
                     'discount' => $discountRangeRequest->{'discount_percent_' . $i},
                     'code' => $discountRangeRequest->{'discount_code_' . $i},
-                    'discount_id' => $discountModel[0]->id
+                    'discount_id' => $discount->id
                 ]);
             }
         }

@@ -16,7 +16,7 @@ class Discount extends Model
 
     protected $table = 'discounts';
 
-    protected $primaryKey = 'code';
+    protected $primaryKey = 'id';
 
     protected $dates = ['deleted_at'];
 
