@@ -14,12 +14,7 @@ class DiscountController extends Controller
 {
     public function index()
     {
-        $discounts = Discount::with(['brand', 'discountsRanges'])
-            ->whereHas('brand', fn ($query) => $query->whereActive('1'))
-            ->orderBy('discounts.name')
-            ->paginate(5);
-
-        return view('discount.index', compact('discounts'));
+        return view('discount.index');
     }
 
     public function create()
