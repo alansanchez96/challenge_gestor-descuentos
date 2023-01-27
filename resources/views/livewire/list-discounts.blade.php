@@ -2,23 +2,26 @@
     <div class="w-11/12 mx-auto py-6 px-4 sm:px-6 lg:px-8">
 
         <div class="w-full flex flex-row justify-start bg-gray-50 mb-6 rounded p-6">
-            <select id=""
+            <select wire:model.defer="brandFilter"
                 class="appearance-none w-1/6 bg-gray-200 border border-gray-200 text-gray-700 mx-1 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                 <option disabled selected>Filtrar por rentadora</option>
                 @foreach ($brands as $brand)
                     <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                 @endforeach
             </select>
-            <select id=""
+            <select wire:model.defer="regionFilter"
                 class="appearance-none w-1/6 bg-gray-200 border border-gray-200 text-gray-700 mx-1 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                 <option disabled selected>Filtrar por region</option>
+                @foreach ($regions as $region)
+                    <option value="{{ $region->id }}">{{ $region->name }}</option>
+                @endforeach
             </select>
             <input placeholder="Busca por nombre" wire:model.defer="searchDiscount"
                 class="appearance-none inline-block w-1/5 bg-gray-200 text-gray-700 border mx-1 border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
             <input placeholder="AWD/BCD" wire:model.defer="searchCode"
                 class="appearance-none inline-block w-1/5 bg-gray-200 text-gray-700 border mx-1 border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
             <div class="flex justify-end flex-row w-1/4">
-                <button type="button" wire:click="search"
+                <button type="button" wire:click.defer="search"
                     class="rounded-md py-3 px-4 bg-indigo-500 hover:bg-indigo-700 text-white border-indigo-500">
                     Buscar
                 </button>

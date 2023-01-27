@@ -6,10 +6,12 @@
         @if (session('success'))
             <p class="text-green-500 mt-2 font-bold">{{ session('success') }}</p>
         @endif
-        <button type="button"
-            class="mr-auto mt-3 rounded-md py-3 px-4 bg-indigo-500 hover:bg-indigo-700 text-white border-indigo-500">
-            <a href="{{ route('discount.create') }}">Nuevo Descuento</a>
-        </button>
+        <a href="{{ route('discount.create') }}">
+            <button type="button"
+                class="mr-auto mt-3 rounded-md py-3 px-4 bg-indigo-500 hover:bg-indigo-700 text-white border-indigo-500">
+                Nuevo Descuento
+            </button>
+        </a>
     </x-slot>
 
     @livewire('list-discounts')

@@ -83,7 +83,8 @@
                     @error('discounts_priority')
                         <p class="text-red-700 mb-2"><i>{{ $message }}</i></p>
                     @enderror
-                    <input type="number" name="discounts.priority" placeholder="Desde 1 a 1000..." min="1" max="1000"
+                    <input type="number" name="discounts.priority" placeholder="Desde 1 a 1000..." min="1"
+                        max="1000"
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                 </div>
 
