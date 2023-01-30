@@ -33,5 +33,6 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/auth.php';
 
 Route::get('/discounts', [DiscountController::class, 'index'])->name('discount.index');
+Route::delete('/discounts/{discount}', [DiscountController::class, 'destroy'])->name('discount.destroy');
 Route::get('/create-discounts', [DiscountController::class, 'create'])->name('discount.create');
 Route::post('/create-discounts', [DiscountController::class, 'store'])->name('discount.store');

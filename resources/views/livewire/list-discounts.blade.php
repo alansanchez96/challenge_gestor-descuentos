@@ -146,10 +146,16 @@
                                         class="mr-auto rounded-md py-3 px-4 bg-indigo-500 hover:bg-indigo-700 text-white border-indigo-500">
                                         <a href="#">Editar</a>
                                     </button>
-                                    <button type="button"
-                                        class="mr-auto rounded-md py-3 px-4 bg-red-500 hover:bg-red-700 text-white border-red-500">
-                                        <a href="#">Eliminar</a>
-                                    </button>
+                                    <form method="post" class="inline"
+                                        action="{{ route('discount.destroy', $discount) }}">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit"
+                                            onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?')"
+                                            class="mr-auto rounded-md py-3 px-4 bg-red-500 hover:bg-red-700 text-white border-red-500">
+                                            Eliminar
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

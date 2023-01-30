@@ -5,6 +5,8 @@
         </h2>
         @if (session('success'))
             <p class="text-green-500 mt-2 font-bold">{{ session('success') }}</p>
+        @elseif(session('delete'))
+            <p class="text-red-700 mt-2 font-bold">{{ session('delete') }}</p>
         @endif
         <div class="flex w-full justify-between">
             <a href="{{ route('discount.create') }}">
