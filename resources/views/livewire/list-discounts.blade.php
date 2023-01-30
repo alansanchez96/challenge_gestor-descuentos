@@ -29,6 +29,10 @@
                     class="ml-2 rounded-md py-3 px-4 bg-gray-500 hover:bg-gray-700 text-white border-indigo-500">
                     Eliminar filtros
                 </button>
+                <button type="button" wire:click.prevent="export"
+                    class="ml-2 rounded-md py-3 px-4 bg-green-600 hover:bg-green-700 text-white border-green-500">
+                    Exportar CSV
+                </button>
             </div>
         </div>
 
