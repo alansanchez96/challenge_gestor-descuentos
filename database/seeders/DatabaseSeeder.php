@@ -31,5 +31,6 @@ class DatabaseSeeder extends Seeder
         $this->call(BrandSeeder::class);
         $this->call(RegionSeeder::class);
         $this->call(AccessTypeSeeder::class);
+        $this->call(DiscountSeeder::class);
     }
 }
