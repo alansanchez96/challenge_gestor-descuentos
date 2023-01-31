@@ -145,7 +145,7 @@ valores de las columnas (formato de fechas, números y el alineamiento).
 - Descargue el repositorio en su maquina local:
 
 ```bash
-git clone https://github.com/alansanchez96/green-flame_test.git
+git clone https://github.com/alansanchez96/challenge_gestor-descuentos.git
 ```
 - Abra su terminal preferida en la raiz del proyecto y ejecute:
 
@@ -175,11 +175,11 @@ npm run dev
 `Usuario: admin@example.com`
 `Password: password`
 
-###Imagenes del proyecto
+### Imagenes del proyecto
 
-#####Listado
+##### Listado
 
 [![Listado](https://i.ibb.co/GpKHsVb/Screenshot-2023-01-31-at-16-17-55-Laravel.png "Listado")](https://i.ibb.co/GpKHsVb/Screenshot-2023-01-31-at-16-17-55-Laravel.png "Listado")
 
-#####Formulario
+##### Formulario
 [![Formulario](https://i.ibb.co/2gpVXQc/Screenshot-2023-01-31-at-16-22-51-Laravel.png "Formulario")](https://i.ibb.co/2gpVXQc/Screenshot-2023-01-31-at-16-22-51-Laravel.png "Formulario")
