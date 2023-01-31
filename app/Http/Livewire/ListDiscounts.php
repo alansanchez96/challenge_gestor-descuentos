@@ -7,10 +7,13 @@ use App\Models\Region;
 use Livewire\Component;
 use App\Models\Discount;
 use App\Exports\DiscountExport;
+use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ListDiscounts extends Component
 {
+    use WithPagination;
+
     public $brands;
     public $brandFilter;
 
@@ -23,6 +26,11 @@ class ListDiscounts extends Component
     protected $listeners = [
         'reset' => 'resetFilters',
     ];
+
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
+    }
 
     public function mount()
     {
