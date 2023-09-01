@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\DiscountRequest;
 use App\Models\{Brand, Region, Discount, AccessType};
@@ -20,7 +21,7 @@ class DiscountController extends Controller
             $brands         = Brand::select('id', 'name')->active()->orderBy('display_order', 'desc')->get();
             $accessTypes    = AccessType::select('code', 'name')->orderBy('display_order', 'desc')->get();
             $regions        = Region::select('id', 'name')->orderBy('display_order', 'desc')->get();
-    
+
             return view('discount.create', compact('brands', 'accessTypes', 'regions'));
         } catch (\Exception $e) {
             Log::error($e->getMessage());
@@ -38,19 +39,22 @@ class DiscountController extends Controller
                 }
             }
 
+            $start_date = Carbon::createFromFormat('m/d/Y', $request->start_date)->format('Y-m-d');
+            $end_date = Carbon::createFromFormat('m/d/Y', $request->end_date)->format('Y-m-d');
+
             $discount = Discount::firstOrCreate([
                 'name'              => $request->discounts_name,
-                'start_date'        => $request->start_date,
-                'end_date'          => $request->end_date,
+                'start_date'        => $start_date,
+                'end_date'          => $end_date,
                 'priority'          => $request->discounts_priority,
                 'active'            => $request->discounts_active,
                 'region_id'         => $request->discounts_region_id,
-                'brand_id'          => $request->discount_brand_id,
+                'brand_id'          => $request->discounts_brand_id,
                 'access_type_code'  => $request->discounts_access_type_code
             ]);
 
             if (!$discount) throw new ModelNotFoundException('Error al crear un nuevo descuento');
-    
+
             for ($i = 1; $i <= 3; $i++) {
                 if ($request->{'from_days_' . $i} && $request->{'to_days_' . $i} !== null) {
                     $discountRange = $discount->discountsRanges()->create([
@@ -81,7 +85,7 @@ class DiscountController extends Controller
     {
         try {
             $discount->delete();
-    
+
             return redirect()->route('discount.index')->with('delete', 'Descuento eliminado correctamente.');
         } catch (\Exception $e) {
             Log::error($e->getMessage());
