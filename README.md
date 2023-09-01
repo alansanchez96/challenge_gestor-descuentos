@@ -15,6 +15,10 @@
 - Abra su terminal preferida en la raiz del proyecto y ejecute para instalar las dependencias:
 
 ```bash
+	$ cp .env.example .env
+```
+
+```bash
 	$ composer install && npm install
 ```
 
