@@ -6,10 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Database\Seeders\BrandSeeder;
-use Database\Seeders\RegionSeeder;
-use Illuminate\Support\Facades\Hash;
-use Database\Seeders\AccessTypeSeeder;
+use Database\Seeders\{BrandSeeder, RegionSeeder, AccessTypeSeeder};
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,14 +20,16 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'admin@example.com',
-            'password' => Hash::make('password')
+            'name'      => 'Test User',
+            'email'     => 'admin@example.com',
+            'password'  => bcrypt('password')
         ]);
 
-        $this->call(BrandSeeder::class);
-        $this->call(RegionSeeder::class);
-        $this->call(AccessTypeSeeder::class);
-        $this->call(DiscountSeeder::class);
+        $this->call([
+            BrandSeeder::class,
+            RegionSeeder::class,
+            AccessTypeSeeder::class,
+            DiscountSeeder::class
+        ]);
     }
 }

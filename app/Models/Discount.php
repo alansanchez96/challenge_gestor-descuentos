@@ -2,10 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Brand;
-use App\Models\Region;
-use App\Models\AccessType;
-use App\Models\DiscountRange;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,6 +17,16 @@ class Discount extends Model
     protected $dates = ['deleted_at'];
 
     protected $guarded = [];
+
+    public function getStartDateFormatedAttribute()
+    {
+        return date('d M Y', strtotime($this->start_date));
+    }
+
+    public function getEndDateFormatedAttribute()
+    {
+        return date('d M Y', strtotime($this->end_date));
+    }
 
     public function brand()
     {

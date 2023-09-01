@@ -19,11 +19,8 @@ class DiscountExport implements FromView
 
     public function view(): View
     {
-        return view(
-            'discount.export',
-            [
-                'discounts' => $this->discounts
-            ]
-        );
+        return view('discount.export', [
+            'discounts' => $this->discounts
+        ]);
     }
 }

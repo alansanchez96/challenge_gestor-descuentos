@@ -146,6 +146,30 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'discounts_name'                => 'Nombre del descuento',
+        'discounts_active'              => 'Activo / Inactivo',
+        'discount_brand_id'             => 'Rentadora',
+        'discounts_access_type_code'    => 'Tipo de acceso',
+        'discounts_priority'            => 'Prioridad',
+        'discounts_region_id'           => 'Region',
+        'start_date'                    => 'Fecha inicial',
+        'end_date'                      => 'Fecha final',
+
+        'from_days_1'                   => 'Desde (1)',
+        'to_days_1'                     => 'Hasta (1)',
+        'discount_percent_1'            => 'Porcentaje (1)',
+        'discount_code_1'               => 'Código (1)',
+        
+        'from_days_2'                   => 'Desde (2)',
+        'to_days_2'                     => 'Hasta (2)',
+        'discount_percent_2'            => 'Porcentaje (2)',
+        'discount_code_2'               => 'Código (2)',
+        
+        'from_days_3'                   => 'Desde (3)',
+        'to_days_3'                     => 'Hasta (3)',
+        'discount_percent_3'            => 'Porcentaje (3)',
+        'discount_code_3'               => 'Código (3)',
+    ],
 
 ];

@@ -2,30 +2,21 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Brand;
-use App\Models\Region;
 use Livewire\Component;
-use App\Models\Discount;
-use App\Exports\DiscountExport;
 use Livewire\WithPagination;
+use App\Exports\DiscountExport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\{Brand, Region, Discount};
 
 class ListDiscounts extends Component
 {
     use WithPagination;
 
-    public $brands;
-    public $brandFilter;
+    public $brands, $brandFilter;
+    public $regions, $regionFilter;
+    public $searchDiscount, $searchCode;
 
-    public $regions;
-    public $regionFilter;
-
-    public $searchDiscount;
-    public $searchCode;
-
-    protected $listeners = [
-        'reset' => 'resetFilters',
-    ];
+    protected $listeners = [ 'reset' => 'resetFilters' ];
 
     public function updatingSearch(): void
     {
@@ -34,8 +25,8 @@ class ListDiscounts extends Component
 
     public function mount()
     {
-        $this->brands = Brand::whereActive('1')->orderBy('display_order')->get();
-        $this->regions = Region::orderBy('display_order', 'asc')->get();
+        $this->brands   = Brand::whereActive('1')->orderBy('display_order')->get();
+        $this->regions  = Region::orderBy('display_order', 'asc')->get();
     }
 
     public function resetFilters()
@@ -46,23 +37,13 @@ class ListDiscounts extends Component
     public function export()
     {
         $discounts = Discount::with(['brand', 'discountsRanges'])
-            ->whereHas('brand', fn ($query) => $query->whereActive('1'))
-            ->when($this->brandFilter, fn ($query) => $query->where('brand_id', $this->brandFilter))
-            ->when($this->regionFilter, fn ($query) => $query->where('region_id', $this->regionFilter))
-            ->when($this->searchDiscount, fn ($query) => $query->where('discounts.name', 'like', '%' . $this->searchDiscount . '%'))
-            ->when(
-                $this->searchCode,
-                fn ($query) => $query->whereHas(
-                    'discountsRanges',
-                    fn ($query) => $query->where(
-                        'discount_ranges.code',
-                        'like',
-                        $this->searchCode
-                    )
-                )
-            )
-            ->orderBy('discounts.name')
-            ->get();
+        ->whereHas('brand',             fn ($q) => $q->whereActive('1'))
+        ->when($this->brandFilter,      fn ($q) => $q->where('brand_id', $this->brandFilter))
+        ->when($this->regionFilter,     fn ($q) => $q->where('region_id', $this->regionFilter))
+        ->when($this->searchDiscount,   fn ($q) => $q->where('discounts.name', 'like', "%{$this->searchDiscount}%"))
+        ->when($this->searchCode,       fn ($q) => $q->whereHas('discountsRanges', fn ($query) => $query->where('discount_ranges.code', 'like', $this->searchCode)))
+        ->orderBy('discounts.name')
+        ->get();
 
         return Excel::download(new DiscountExport($discounts), 'descuentos.csv');
     }
@@ -75,26 +56,14 @@ class ListDiscounts extends Component
     public function render()
     {
         $discounts = Discount::with(['brand', 'discountsRanges'])
-            ->whereHas('brand', fn ($query) => $query->whereActive('1'))
-            ->when($this->brandFilter, fn ($query) => $query->where('brand_id', $this->brandFilter))
-            ->when($this->regionFilter, fn ($query) => $query->where('region_id', $this->regionFilter))
-            ->when($this->searchDiscount, fn ($query) => $query->where('discounts.name', 'like', '%' . $this->searchDiscount . '%'))
-            ->when(
-                $this->searchCode,
-                fn ($query) => $query->whereHas(
-                    'discountsRanges',
-                    fn ($query) => $query->where(
-                        'discount_ranges.code',
-                        'like',
-                        $this->searchCode
-                    )
-                )
-            )
-            ->orderBy('discounts.name')
-            ->paginate(5);
+        ->whereHas('brand',             fn ($q) => $q->whereActive('1'))
+        ->when($this->brandFilter,      fn ($q) => $q->where('brand_id', $this->brandFilter))
+        ->when($this->regionFilter,     fn ($q) => $q->where('region_id', $this->regionFilter))
+        ->when($this->searchDiscount,   fn ($q) => $q->where('discounts.name', 'like', "%{$this->searchDiscount}%"))
+        ->when($this->searchCode,       fn ($q) => $q->whereHas('discountsRanges', fn ($query) => $query->where('discount_ranges.code', 'like', $this->searchCode)))
+        ->orderBy('discounts.name')
+        ->paginate(5);
 
-        return view('livewire.list-discounts', [
-            'discounts' => $discounts
-        ]);
+        return view('livewire.list-discounts', compact('discounts'));
     }
 }

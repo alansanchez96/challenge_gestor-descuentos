@@ -30,32 +30,23 @@
                 <td>
                     @foreach ($discount->discountsRanges as $discountRange)
                         <p class="font-semibold">
-                            {{ $discountRange->from_days }} - {{ $discountRange->to_days }}
+                            {{ $discountRange->period_formated }}
                         </p>
                     @endforeach
                 </td>
                 <td>
                     @foreach ($discount->discountsRanges as $discountRange)
-                        @if (!$discountRange->code)
-                            <p class="font-bold">--</p>
-                        @else
-                            <p class="font-semibold"> {{ $discountRange->code }}</p>
-                        @endif
+                        <p class="font-semibold"> {{ $discountRange->code_formated }}</p>
                     @endforeach
                 </td>
                 <td>
                     @foreach ($discount->discountsRanges as $discountRange)
-                        @if (!$discountRange->discount)
-                            <p class="font-bold">--</p>
-                        @else
-                            <p class="font-semibold"> {{ $discountRange->discount }}%</p>
-                        @endif
+                        <p class="font-semibold"> {{ $discountRange->discount_percentage_formated }}</p>
                     @endforeach
                 </td>
                 <td>
                     <p>
-                        <span class="font-semibold">{{ date('d M Y', strtotime($discount->start_date)) }}</span>
-                        / <span class="font-semibold">{{ date('d M Y', strtotime($discount->end_date)) }}</span>
+                        <span class="font-semibold">{{ $discount->start_date_formated }}</span> / <span class="font-semibold">{{ $discount->end_date_formated }}</span>
                     </p>
                 </td>
                 <td> {{ $discount->priority }}</td>
